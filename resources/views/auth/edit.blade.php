@@ -5,10 +5,10 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Register') }}</div>
+                    <div class="card-header">{{ __('Edit') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('register') }}">
+                        <form method="POST" action="{{ route('user.update', ['user' => $user]) }}">
                             @csrf
 
                             <div class="form-group row">
@@ -16,9 +16,9 @@
                                        class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="first_name" type="text"
+                                    <input id="first_name" type="text" value="{{ $user->first_name }}"
                                            class="form-control @error('first_name') is-invalid @enderror"
-                                           name="first_name" value="{{ old('first_name') }}" required
+                                           name="first_name" required
                                            autocomplete="first_name" autofocus>
 
                                     @error('first_name')
@@ -36,7 +36,7 @@
                                 <div class="col-md-6">
                                     <input id="last_name" type="text"
                                            class="form-control @error('last_name') is-invalid @enderror"
-                                           name="last_name" value="{{ old('last_name') }}" required
+                                           name="last_name" value="{{ $user->last_name }}" required
                                            autocomplete="last_name" autofocus>
 
                                     @error('last_name')
@@ -54,7 +54,7 @@
                                 <div class="col-md-6">
                                     <input id="email" type="email"
                                            class="form-control @error('email') is-invalid @enderror" name="email"
-                                           value="{{ old('email') }}" required autocomplete="email">
+                                           value="{{ $user->email }}" required autocomplete="email">
 
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">

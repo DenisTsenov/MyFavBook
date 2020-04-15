@@ -20,3 +20,14 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/edit', 'Auth\EditController@edit')
+         ->name('user.edit');
+    Route::post('/edit/{user}', 'Auth\EditController@update')
+         ->name('user.update');
+});
+
+Route::middleware(['admin'])->group(function () {
+    Route::resource('book', 'BookController');
+});

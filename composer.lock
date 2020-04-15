@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f0dcbdc80776ca79d6311b8f92c5a4b5",
+    "content-hash": "a2d4f8305d9071d8ee2f5e973388e637",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -687,6 +687,67 @@
                 "url"
             ],
             "time": "2019-07-01T23:21:34+00:00"
+        },
+        {
+            "name": "intervention/validation",
+            "version": "2.3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Intervention/validation.git",
+                "reference": "5342b0f8a45b2f14089b41c4abe7baf2164d57fa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Intervention/validation/zipball/5342b0f8a45b2f14089b41c4abe7baf2164d57fa",
+                "reference": "5342b0f8a45b2f14089b41c4abe7baf2164d57fa",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^5.5|~6|~7",
+                "illuminate/validation": "^5.5|~6|~7",
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^0.12.17",
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Intervention\\Validation\\Laravel\\ValidationServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Intervention\\Validation\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Oliver Vogel",
+                    "email": "oliver@olivervogel.com",
+                    "homepage": "https://olivervogel.com/"
+                }
+            ],
+            "description": "Additional Validator Functions for the Laravel Framework",
+            "keywords": [
+                "BIC",
+                "IBAN",
+                "ISBN",
+                "ISIN",
+                "creditcard",
+                "laravel",
+                "luhn",
+                "validation",
+                "validator"
+            ],
+            "time": "2020-03-22T20:25:19+00:00"
         },
         {
             "name": "laravel/framework",

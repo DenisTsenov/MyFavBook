@@ -8,7 +8,5 @@ class Book extends Model
 {
     protected $table = 'books';
 
-    protected $fillable = ['name', 'isbn', 'description', 'image_path'];
-
-
+    protected $fillable = ['name', 'isbn', 'description', 'image'];
 }

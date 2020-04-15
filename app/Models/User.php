@@ -39,8 +39,25 @@ class User extends Authenticatable
         'admin'             => 'boolean',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::updating(function ($user) {
+            $user->active = false;
+            $user->admin  = false;
+        });
+    }
+
     public function books()
     {
         $this->belongsToMany(Book::class);
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        if ($value) {
+            $this->attributes['password'] = bcrypt($value);
+        }
     }
 }

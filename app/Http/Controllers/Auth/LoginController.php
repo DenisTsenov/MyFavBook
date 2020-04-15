@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -31,10 +32,14 @@ class LoginController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @return void
      */
     public function __construct()
     {
+        if (\request()->input('email')) {
+            if (Auth::attempt(['email' => \request()->input('email'), 'password' => \request()->input('password'), 'active' => 0])) {
+//                \request()->session()->flash('Your account is not approved yet. Please try again later')->success();
+            }
+        }
         $this->middleware('guest')->except('logout');
     }
 }
