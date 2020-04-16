@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="row mt-5 justify-content-center">
-        @foreach($user->books as $book)
+        @forelse($user->books as $book)
             <div class="card mx-2 mb-3 cr">
-                <img class="card-img-top" src="{{ asset('storage/book_images/' . $book->image) }}"
+                <img class="card-img-top" src="{{ asset('book_images/' . $book->image) }}"
                      alt="{{ $book->name }}">
                 <div class="card-body">
                     <h5 class="card-title">Name: {{ $book->name }}</h5>
@@ -15,7 +15,9 @@
                     </button>
                 </div>
             </div>
-        @endforeach
+        @empty
+            <h3><span class="badge badge-secondary">You still do not have favorite books</span></h3>
+        @endforelse
     </div>
 @endsection
 

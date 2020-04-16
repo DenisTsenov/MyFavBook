@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'password',
+        'first_name', 'last_name', 'email', 'password', 'active'
     ];
 
     /**
@@ -39,25 +39,17 @@ class User extends Authenticatable
         'admin'             => 'boolean',
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::updating(function ($user) {
-            $user->active = false;
-            $user->admin  = false;
-        });
-    }
-
     public function books()
     {
        return $this->belongsToMany(Book::class);
     }
 
-    public function setPasswordAttribute($value)
+    /**
+     * @param $value
+     * @return string
+     */
+    public function getFullNameAttribute($value)
     {
-        if ($value) {
-            $this->attributes['password'] = bcrypt($value);
-        }
+        return $this->first_name . ' ' . $this->last_name;
     }
 }

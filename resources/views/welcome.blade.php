@@ -1,36 +1,77 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
+<link rel="stylesheet" href="{{ asset('css/main.css') }}">
+<style>
+    .scrollable {
+        height: 150px;
+        overflow-y: scroll;
+    }
+</style>
+@section('content')
 
-        <title>Laravel</title>
+    <div class="flex-center position-ref full-height">
+        @if (Route::has('login'))
+            <div class="top-right links">
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+                @guest
+                    <a href="{{ route('login') }}">Login</a>
 
-        <!-- Styles -->
-        <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content">
-
+                    @if (Route::has('register'))
+                        <a href="{{ route('register') }}">Register</a>
+                    @endif
+                @endauth
             </div>
+        @endif
+        <div class="content">
+            @if(\Auth::user()->admin && count($unapprovedUsers))
+                <p>There are some user waiting to approve them</p>
+                <div class="scrollable h-50">
+                    @foreach($unapprovedUsers as $user)
+                        <div class="col-sm-12 ">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <p>Name: {{ $user->full_name }}</p>
+                                    <p>Email: {{ $user->email }}</p>
+                                    <button type="button" class="btn btn-info approve"
+                                            data-url="{{ route('user.approve', [$user->id])  }}"
+                                            data-user="{{ $user->id }}">Approve
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        @if(!$loop->last)
+                            <hr>
+                        @endif
+                    @endforeach
+                </div>
+            @elseif(\Auth::user()->admin && !count($unapprovedUsers))
+                <h3>There are no users to approve</h3>
+            @endif
         </div>
-    </body>
-</html>
+    </div>
+@endsection
+
+@push('scripts')
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".approve").click(function () {
+                let buttonApprove = $(this);
+                let url           = buttonApprove.data('url');
+                let user          = buttonApprove.data('user');
+                let _token        = $("input[name=_token]").val();
+
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: {user: user, _token: _token,},
+                    success: function (data) {
+                        buttonApprove.removeClass('btn-info').addClass('btn-success').text('Successfully approved');
+                        buttonApprove.fadeOut(3000, function () {
+                            $(this).remove();
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+@endpush

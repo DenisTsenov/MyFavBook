@@ -32,9 +32,9 @@
                     @endif
                 @else
                     @if(\Auth::user()->admin)
-                        <a href="{{ route('favorites') }}" class="btn btn-light mr-2">My books</a>
+                        <a href="{{ route('book.create') }}" class="btn btn-info mr-2">Add new book</a>
                     @endif
-                    <a href="{{ route('book.create') }}" class="btn btn-info">Add new book</a>
+                        <a href="{{ route('favorites') }}" class="btn btn-light">My books</a>
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

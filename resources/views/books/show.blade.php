@@ -9,13 +9,16 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-6">
-                                <img src="{{ asset('storage/book_images/' . $book->image) }}"
-                                     alt="{{ $book->name }} image">
+                                <img src="{{ asset('book_images/' . $book->image) }}"
+                                     alt="{{ $book->name }}">
                             </div>
                             <div class="col-6">
-                                Name: {{ $book->name }}<br>
+
+                                <p>Name: {{ $book->name }}</p>
                                 Description:<p class="font-weight-normal"> {{ $book->description }}</p>
-                                ISBN: {{ $book->isbn }}
+                                <p>ISBN: {{ $book->isbn }}</p>
+                                <p>Created At: {{ $book->created_at }}</p>
+                                <p>Last updated: {{ $book->updated_at }}</p>
                                 <hr>
                                 <div class="form-check">
                                     <input type="checkbox" {{ $isFavorite ? 'checked' : '' }} class="form-check-input"
@@ -47,7 +50,7 @@
                     $.ajax({
                         url: url,
                         method: 'POST',
-                        data: {book: book, _token: _token,},
+                        data: {book: book, _token: _token},
                         success: function (data) {
                             let elem = '<div class="alert alert-success" id="add" role="alert">\n' +
                                 '  Successfully added!\n' +

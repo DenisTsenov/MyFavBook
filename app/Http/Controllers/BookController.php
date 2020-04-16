@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\BookRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class BookController extends Controller
 {
@@ -31,7 +32,6 @@ class BookController extends Controller
         return view('books.create');
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -40,14 +40,22 @@ class BookController extends Controller
      */
     public function store(BookRequest $request)
     {
-        $image = uniqid() . $request->file('image')->getClientOriginalName();
-        $request->file('image')->storeAs('book_images', $image);
+        $image    = $request->file('image');
+        $filename = uniqid() . $image->getClientOriginalName();
+
+        $imageResize = Image::make($image->getRealPath());
+        $imageResize->resize(260, 240);
+        if (!file_exists(public_path('book_images'))) {
+            mkdir(public_path('book_images'), 0755, true);
+        }
+
+        $imageResize->save(public_path('book_images' . DIRECTORY_SEPARATOR . $filename));
 
         Book::create([
             'name'        => $request->input('name'),
             'isbn'        => $request->input('isbn'),
             'description' => $request->input('description'),
-            'image'       => $image,
+            'image'       => $filename,
         ]);
 
         session()->flash('success', 'Book added successfully.');
@@ -88,16 +96,21 @@ class BookController extends Controller
      */
     public function update(Request $request, Book $book)
     {
-        Storage::delete('books_images' . DIRECTORY_SEPARATOR . $book->image);
+        Storage::delete('book_images' . DIRECTORY_SEPARATOR . $book->image);
 
-        $image = uniqid() . $request->file('image')->getClientOriginalName();
-        $request->file('image')->storeAs('book_images', $image);
+        $image    = $request->file('image');
+        $filename = uniqid() . $image->getClientOriginalName();
+
+        $imageResize = Image::make($image->getRealPath());
+        $imageResize->resize(260, 240);
+
+        $imageResize->save(public_path('book_images' . DIRECTORY_SEPARATOR . $filename));
 
         $book->update([
             'name'        => $request->input('name'),
             'isbn'        => $request->input('isbn'),
             'description' => $request->input('description'),
-            'image'       => $image,
+            'image'       => $filename,
         ]);
 
         session()->flash('success', 'Book updated successfully.');
@@ -109,13 +122,23 @@ class BookController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Book $book
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function destroy(Book $book)
     {
-        dd($book);
+        Storage::delete('book_images' . DIRECTORY_SEPARATOR . $book->image);
+
+        $book->delete();
+
+        session()->flash('success', 'Book was deleted successfully');
+
+        return response()->json(['response' => route('home')]);
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function showFavorite()
     {
         $user = User::where('id', Auth::user()->id)
@@ -125,6 +148,10 @@ class BookController extends Controller
         return view('auth.my_favorite_books', compact('user'));
     }
 
+    /**
+     * @param Book $book
+     * @param bool $remove
+     */
     public function toggleFavorite(Book $book, $remove = false)
     {
         $user = User::find(Auth::user()->id);

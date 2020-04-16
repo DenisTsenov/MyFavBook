@@ -22,12 +22,15 @@
                 <td>
                     {{ $book->isbn }}
                 </td>
-                <td data-toggle="tooltip" data-placement="top" title="{{ strlen($book->description) > 10 ? $book->description : ''}}">
+                <td data-toggle="tooltip" data-placement="top"
+                    title="{{ strlen($book->description) > 10 ? $book->description : ''}}">
                     {{ strlen($book->description) > 10 ? substr($book->description, 0, 10) . '...':  $book->description}}
                 </td>
                 <td>
-                   <a href="{{ route('book.edit', [$book->id]) }}" class="btn btn-light">Edit</a>
-                   <a href="{{ route('book.show', [$book->id]) }}" class="btn btn-info">Show</a>
+                    @if(\Auth::user()->admin)
+                        <a href="{{ route('book.edit', [$book->id]) }}" class="btn btn-light">Edit</a>
+                    @endif
+                    <a href="{{ route('book.show', [$book->id]) }}" class="btn btn-info">Show</a>
                 </td>
             </tr>
         @endforeach

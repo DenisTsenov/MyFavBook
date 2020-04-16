@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Book;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -30,6 +31,13 @@ class HomeController extends Controller
         return view('home', compact('books'));
     }
 
+    public function main()
+    {
+        $unapprovedUsers = User::where('id', '<>', Auth::id())->where('active', false)->get();
+
+        return view('welcome', compact('unapprovedUsers'));
+    }
+
     /**
      * @param Request $request
      * @return array|string
@@ -37,7 +45,7 @@ class HomeController extends Controller
      */
     public function fetch(Request $request)
     {
-        if ($request->ajax()){
+        if ($request->ajax()) {
             $books = DB::table('books')->simplePaginate(2);
 
             return view('partials._books_table', compact('books'))->render();
