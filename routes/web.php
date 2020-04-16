@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', '');
 
 Auth::routes();
 
@@ -26,8 +24,15 @@ Route::middleware(['auth'])->group(function () {
          ->name('user.edit');
     Route::post('/edit/{user}', 'Auth\EditController@update')
          ->name('user.update');
+    Route::post('book/add_favorite/{book}/{remove?}', 'BookController@toggleFavorite')
+         ->name('book.toggle_favorite');
+    Route::get('favorites', 'BookController@showFavorite')
+         ->name('favorites');
 });
 
 Route::middleware(['admin'])->group(function () {
     Route::resource('book', 'BookController');
 });
+
+Route::post('pagination/fetch', 'HomeController@fetch')
+     ->name('pagination.fetch');

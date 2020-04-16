@@ -11,6 +11,13 @@
                             {{ session('success') }}
                         </div>
                     @endif
+                    @if(count($books))
+                        @include('partials._books_table')
+                    @else
+                        <h3 class="text-center">
+                            <span class="badge badge-info">There are still no uploaded books</span>
+                        </h3>
+                    @endif
                 </div>
             </div>
         </div>

@@ -5,9 +5,10 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">{{ __('Create book') }}</div>
+                    <div class="card-header">{{ __('Edit ' . $book->name) }}</div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('book.store') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('book.update', [$book->id]) }}" enctype="multipart/form-data">
+                            @method('PUT')
                             @include('books.partials._form')
                         </form>
                     </div>

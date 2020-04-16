@@ -1,7 +1,10 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="container">
-        <a class="navbar-brand" href="{{ url('/') }}">
-            {{ config('app.name', 'Laravel') }}
+        <a class="btn btn-info mr-2" href="{{ url('/') }}">
+            Home
+        </a>
+        <a class="btn btn-light" href="{{ route('home')}}">
+            {{ config('app.name', 'My Favorite Book') }}
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse"
                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -29,7 +32,7 @@
                     @endif
                 @else
                     @if(\Auth::user()->admin)
-                        <a href="{{ route('book.create') }}" class="btn btn-light mr-2">My books</a>
+                        <a href="{{ route('favorites') }}" class="btn btn-light mr-2">My books</a>
                     @endif
                     <a href="{{ route('book.create') }}" class="btn btn-info">Add new book</a>
                     <li class="nav-item dropdown">
