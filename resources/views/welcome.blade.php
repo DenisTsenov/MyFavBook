@@ -22,6 +22,7 @@
             </div>
         @endif
         <div class="content">
+            <p>Hello {{ \Auth::user()->first_name }}</p>
             @if(\Auth::user()->admin && count($unapprovedUsers))
                 <p>There are some user waiting to approve them</p>
                 <div class="scrollable h-50">
@@ -46,6 +47,8 @@
             @elseif(\Auth::user()->admin && !count($unapprovedUsers))
                 <h3>There are no users to approve</h3>
             @endif
+            <p>This application allows you to create your own favorite books list.</p>
+            <p>If you have admin right you can also create and update your amazing list of books.</p>
         </div>
     </div>
 @endsection

@@ -15,7 +15,7 @@
                         @include('partials._books_table')
                     @else
                         <h3 class="text-center">
-                            <span class="badge badge-info">There are still no uploaded books</span>
+                            <span class="badge badge-info">There are no uploaded books</span>
                         </h3>
                     @endif
                 </div>

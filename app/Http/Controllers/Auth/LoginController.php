@@ -39,10 +39,11 @@ class LoginController extends Controller
         }
 
         if ($this->attemptLogin($request)) {
-            if(!Auth::user()->active){
+            if (!Auth::user()->active) {
                 Auth::logout();
-                $request->session()->flash('still_in_approval', 'Your account is not approved yet. Please try again later');
-            }else{
+                $request->session()
+                        ->flash('still_in_approval', 'Your account is not approved yet. Please try again later');
+            } else {
                 return $this->sendLoginResponse($request);
             }
         }

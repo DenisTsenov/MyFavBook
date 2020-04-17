@@ -5,20 +5,10 @@
                 Home
             </a>
             <a class="btn btn-light" href="{{ route('home')}}">
-                {{ config('app.name', 'My Favorite Book') }}
+                Books list
             </a>
         @endif
-        <button class="navbar-toggler" type="button" data-toggle="collapse"
-                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Left Side Of Navbar -->
-            <ul class="navbar-nav mr-auto">
-
-            </ul>
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
@@ -36,7 +26,7 @@
                     @if(\Auth::user()->admin)
                         <a href="{{ route('book.create') }}" class="btn btn-info mr-2">Add new book</a>
                     @endif
-                        <a href="{{ route('favorites') }}" class="btn btn-light">My books</a>
+                    <a href="{{ route('favorites') }}" class="btn btn-light">My books</a>
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

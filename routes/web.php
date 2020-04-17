@@ -18,8 +18,6 @@ Route::get('/', 'HomeController@main');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::post('pagination/fetch', 'HomeController@fetch')
-     ->name('pagination.fetch');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/edit', 'Auth\EditController@edit')
@@ -30,10 +28,10 @@ Route::middleware(['auth'])->group(function () {
          ->name('book.toggle_favorite');
     Route::get('favorites', 'BookController@showFavorite')
          ->name('favorites');
-    Route::get('book', 'BookController@index')
-         ->name('book.index');
     Route::get('book/{book}/content', 'BookController@showContent')
          ->name('book.show.content');
+    Route::post('pagination/fetch', 'HomeController@fetch')
+         ->name('pagination.fetch');
 });
 
 Route::middleware(['admin'])->group(function () {
@@ -47,9 +45,11 @@ Route::middleware(['admin'])->group(function () {
          ->name('book.update');
     Route::post('book/{book}', 'BookController@destroy')
          ->name('book.destroy');
-
     Route::post('user/approve/{user}', 'Auth\EditController@approve')
          ->name('user.approve');
 
 //    Route::resource('book', 'BookController');
+});
+Route::fallback(function () {
+    abort(404);;
 });
