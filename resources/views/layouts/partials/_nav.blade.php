@@ -1,11 +1,13 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="container">
-        <a class="btn btn-info mr-2" href="{{ url('/') }}">
-            Home
-        </a>
-        <a class="btn btn-light" href="{{ route('home')}}">
-            {{ config('app.name', 'My Favorite Book') }}
-        </a>
+        @if(isset(\Auth::user()->id))
+            <a class="btn btn-info mr-2" href="{{ url('/') }}">
+                Home
+            </a>
+            <a class="btn btn-light" href="{{ route('home')}}">
+                {{ config('app.name', 'My Favorite Book') }}
+            </a>
+        @endif
         <button class="navbar-toggler" type="button" data-toggle="collapse"
                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                 aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
