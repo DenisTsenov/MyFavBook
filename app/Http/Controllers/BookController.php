@@ -69,7 +69,7 @@ class BookController extends Controller
      * @param Book $book
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(Book $book)
+    public function showContent(Book $book)
     {
         $isFavorite = User::find(Auth::user()->id)->books->contains($book->id);
 

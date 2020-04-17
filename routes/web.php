@@ -32,8 +32,8 @@ Route::middleware(['auth'])->group(function () {
          ->name('favorites');
     Route::get('book', 'BookController@index')
          ->name('book.index');
-    Route::get('book/{book}', 'BookController@show')
-         ->name('book.show');
+    Route::get('book/{book}/content', 'BookController@showContent')
+         ->name('book.show.content');
 });
 
 Route::middleware(['admin'])->group(function () {
